@@ -40,7 +40,8 @@ class AppController extends Controller {
             )
         ),
         'Flash',
-        'Session'
+        'Session',
+        'DebugKit.Toolbar'
     );
 
     public $helpers = array('Html', 'Form', 'Session');

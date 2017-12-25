@@ -45,6 +45,17 @@ class UsersController extends AppController {
         // $res = $this->User->read('username', 11);
 
         // 6) 复杂查询
+        $res = $this->User->find('all', [
+            'conditions' => [
+                'OR' => [
+                    'User.id' => 11,
+                    'User.username' => 'user1'
+                ],
+                'AND' => [
+                    'User.group_id' => 11
+                ]
+            ],
+        ]);
 
         //$db = $this->User->getDataSource();
         //$res = $db->fetchAll('SELECT * FROM `users` WHERE 1');
