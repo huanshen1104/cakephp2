@@ -21,6 +21,35 @@ class UsersController extends AppController {
  * @return void
  */
 	public function index() {
+	    // 1) find方法 (first、all、count、list、threaded、neighbors)
+        // $res = $this->User->find('all', [
+        //    'recursive'  => 0, // 模型关联等级
+        //    'fields'     => ['User.username', 'User.group_id'],// 查询的字段
+        //    'conditions' => ['group_id' => 11],// 条件
+        //    'order'      => ['User.id DESC'] // 排序
+        // ]);
+
+        // 2) 魔法查询
+        // $res = $this->User->findByUsername('user1'); // 类似find('first')
+        // $res = $this->User->findAllByUsername('user1');// 类似find('all')
+        // $res = $this->User->findAllByGroupId('user1');。
+
+        // 3）Model::query()
+        // $res = $this->User->query('SELECT * FROM `users` WHERE 1');
+
+        // 4) Model::field(string $name, array $conditions = null, string $order = null)
+        // $this->User->id = 11;
+        // $res = $this->User->field('username', ['id' => '11']);
+
+        // 5) Model::read($fields, $id)
+        // $res = $this->User->read('username', 11);
+
+        // 6) 复杂查询
+
+        //$db = $this->User->getDataSource();
+        //$res = $db->fetchAll('SELECT * FROM `users` WHERE 1');
+        //$res = $db->fetchAll('SHOW TABLES');
+	    //debug($res);
 	    // 动态加载分页组件
 	    $this->Paginator = $this->Components->load('Paginator');
 	    // 设置每页记录数
