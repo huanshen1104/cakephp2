@@ -1,0 +1,28 @@
+div.menu {
+	float: left;
+	!width: 16%;
+	width: 180px;
+	!padding: 10px 1.5%;
+}
+div.menu ul {
+	margin: 0;
+	padding: 0;
+}
+div.menu li {
+	margin: 0 0 1em 0;
+	list-style-type: none;
+	white-space: nowrap;
+	padding: 0;
+}
+div.menu ul li a {
+	font-weight: normal;
+	display: block;
+	clear: both;
+	text-decoration: none;
+}
+div.menu ul li ul {
+	padding: 0 0 0 2em;
+}
+div.topMenu {
+	float: right;
+}

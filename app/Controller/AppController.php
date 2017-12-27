@@ -32,6 +32,9 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 
+    // 设置主题
+    public $theme = 'ExerciseTask';
+
     public $components = array(
         'Acl',
         'Auth' => array(
@@ -57,10 +60,10 @@ class AppController extends Controller {
             'action' => 'login'
         );
         $this->Auth->loginRedirect = array(
-            'controller' => 'posts',
-            'action' => 'add'
+            'controller' => 'pages',
+            'action' => 'display'
         );
 
-        $this->Auth->allow('display', 'logout');
+        $this->Auth->allow('logout');
     }
 }

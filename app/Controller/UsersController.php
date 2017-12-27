@@ -45,30 +45,41 @@ class UsersController extends AppController {
         // $res = $this->User->read('username', 11);
 
         // 6) 复杂查询
-        $res = $this->User->find('all', [
-            'conditions' => [
-                'OR' => [
-                    'User.id' => 11,
-                    'User.username' => 'user1'
-                ],
-                'AND' => [
-                    'User.group_id' => 11
-                ]
-            ],
-        ]);
+        //$res = $this->User->find('all', [
+        //    'conditions' => [
+        //        'OR' => [
+        //            'User.id' => 11,
+        //            'User.username' => 'user1'
+        //        ],
+        //        'AND' => [
+        //            'User.group_id' => 11
+        //        ]
+        //    ],
+        //]);
 
         //$db = $this->User->getDataSource();
         //$res = $db->fetchAll('SELECT * FROM `users` WHERE 1');
         //$res = $db->fetchAll('SHOW TABLES');
 	    //debug($res);
+        if (!empty($this->request->query)) {
+            extract($this->request->query);
+        }
+
+        // 查询条件
+        $conditions = [];
+
+        if (isset($username) && $username) {
+            $conditions['User.username LIKE'] = '%' . $username . '%';
+        }
+
 	    // 动态加载分页组件
 	    $this->Paginator = $this->Components->load('Paginator');
 	    // 设置每页记录数
-        $this->Paginator->settings['limit'] = 2;
+        $this->Paginator->settings['limit'] = 15;
         // 模型关联等级
 		$this->User->recursive = 0;
 		// 模板变量赋值
-		$this->set('users', $this->Paginator->paginate());
+		$this->set('users', $this->Paginator->paginate($conditions));
 	}
 
 /**
@@ -153,8 +164,10 @@ class UsersController extends AppController {
 	}
 
     public function login() {
+	    $this->layout = 'default2';
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
+                //debug($this->Auth->redirectUrl());exit;
                 return $this->redirect($this->Auth->redirectUrl());
             }
             $this->Session->setFlash(__('Your username or password was incorrect.'));

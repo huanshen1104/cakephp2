@@ -21,8 +21,22 @@ class GroupsController extends AppController {
  * @return void
  */
 	public function index() {
+        if (!empty($this->request->query)) {
+            extract($this->request->query);
+        }
+
+        // 查询条件
+        $conditions = [];
+
+        if (isset($name) && $name) {
+            $conditions['Group.name LIKE'] = '%' . $name . '%';
+        }
+
+        if (isset($group_desc) && $group_desc) {
+            $conditions['Group.group_desc LIKE'] = '%' . $group_desc . '%';
+        }
 		$this->Group->recursive = 0;
-		$this->set('groups', $this->Paginator->paginate());
+		$this->set('groups', $this->Paginator->paginate($conditions));
 	}
 
 /**
