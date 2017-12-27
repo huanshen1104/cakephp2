@@ -203,4 +203,9 @@ class Job extends AppModel {
 			),
 		),
 	);
+
+	public function beforeSave($options = array()) {
+		//$this->data['Job']['week_mask'] = implode(',', $this->data['Job']['week_mask']);
+		return true;
+	}
 }

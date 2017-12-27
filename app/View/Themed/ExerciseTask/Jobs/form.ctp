@@ -42,8 +42,28 @@
                 ], [
                     'legend'    => false,
                     'separator' => '&nbsp;&nbsp;',
-                    'value'     => 1
+                    'value'     => isset($this->request->data['Job']['is_enabled']) ? $this->request->data['Job']['is_enabled'] : '1'
                 ]); ?>
+            </td>
+        </tr>
+        <tr>
+            <td>Week Mask</td>
+            <td>
+                <?php echo $this->Form->checkbox('week_mask', [
+                    'name'  => 'data[Job][week_mask][]',
+                    'value' => 'd1',
+                    'hiddenField' => false
+                ]); ?>Monday
+                <?php echo $this->Form->checkbox('week_mask', [
+                    'name'  => 'data[Job][week_mask][]',
+                    'value' => 'd3',
+                    'hiddenField' => false
+                ]); ?>Tuesday
+                <?php echo $this->Form->checkbox('week_mask', [
+                    'name'  => 'data[Job][week_mask][]',
+                    'value' => 'd3',
+                    'hiddenField' => false
+                ]); ?>Wednesday
             </td>
         </tr>
         <tr>
@@ -54,7 +74,7 @@
                 ], [
                     'legend'    => false,
                     'separator' => '&nbsp;&nbsp;',
-                    'value'     => 'EMAIL'
+                    'value'     => isset($this->request->data['Job']['template_type']) ? $this->request->data['Job']['template_type'] : 'EMAIL'
                 ]); ?>
             </td>
         </tr>
@@ -79,10 +99,12 @@
             <td><?php echo $this->Form->textarea('template_content'); ?>
             </td>
         </tr>
+        <tr>
+            <td class="actions" colspan="2" style="text-align: center">
+                <input type="submit" value="<?=isset($this->request->data['Job']['id']) ? 'Save' : 'Add';?>">
+                <a href="/jobs/index">Cancel</a>
+            </td>
+        </tr>
         </tbody>
     </table>
-    <?php echo $this->Form->end([
-        'label' => 'add',
-        'div'   => ['style' => 'text-align: center;']
-    ]);?>
 </div>

@@ -16,12 +16,14 @@
                     ]); ?>
                 </td>
             </tr>
+			<tr>
+				<td class="actions" colspan="2" style="text-align: right">
+					<input type="submit" value="Search">
+					<a href="/users/index">Clear</a>
+				</td>
+			</tr>
             </tbody>
         </table>
-        <?php echo $this->Form->end([
-            'label' => 'search',
-            'div'   => ['style' => 'text-align: right;'],
-        ]);?>
     </div>
 
     <br>

@@ -7,8 +7,8 @@
                 'type' => 'get',
                 'url' => 'index',
         ]);?>
-            <table>
-                <tbody>
+        <table>
+            <tbody>
                 <tr>
                     <td><?php echo $this->Form->input('job_code', [
                             'between' => '<td>',
@@ -50,12 +50,14 @@
                         ]); ?>
                     </td>
                 </tr>
-                </tbody>
-            </table>
-        <?php echo $this->Form->end([
-            'label' => 'search',
-            'div'   => ['style' => 'text-align: right;'],
-        ]);?>
+                <tr>
+                    <td class="actions" colspan="2" style="text-align: right">
+                        <input type="submit" value="Search">
+                        <a href="/jobs/index">Clear</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <br>

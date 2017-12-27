@@ -58,20 +58,6 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
 			<?php echo $this->Flash->render(); ?>
 
-            <div class="menu">
-                <ul>
-                    <li><?php echo $this->Html->link(__('Home'), array('controller' => 'pages', 'action' => 'display')); ?></li>
-                    <li><?php echo $this->Html->link(__('Job Management'), array('controller' => 'jobs', 'action' => 'index')); ?> </li>
-                    <li><?php echo $this->Html->link(__('User Management'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-                    <li>
-                        <ul>
-                            <li><?php echo $this->Html->link(__('User'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-                            <li><?php echo $this->Html->link(__('Role'), array('controller' => 'groups', 'action' => 'index')); ?> </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-
 			<?php echo $this->fetch('content'); ?>
 		</div>
 		<div id="footer">

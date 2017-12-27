@@ -64,6 +64,6 @@ class AppController extends Controller {
             'action' => 'display'
         );
 
-        $this->Auth->allow('logout');
+        $this->Auth->allow(['logout','changePassword']);
     }
 }
