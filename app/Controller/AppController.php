@@ -64,6 +64,16 @@ class AppController extends Controller {
             'action' => 'display'
         );
 
-        $this->Auth->allow(['logout','changePassword']);
+        $this->Auth->allow(['logout']);
+
+        $res = $this->Acl->check([
+            'model' => 'Group',
+            'foreign_key' => $this->Auth->user('group_id')
+        ], 'Users');
+        debug($this->request->action);exit;
+    }
+
+    protected function _checkAcl() {
+
     }
 }

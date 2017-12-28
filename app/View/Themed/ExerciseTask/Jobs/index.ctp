@@ -71,7 +71,7 @@
 			<th><?php echo $this->Paginator->sort('job_code'); ?></th>
 			<th><?php echo $this->Paginator->sort('job_desc1'); ?></th>
             <th><?php echo $this->Paginator->sort('template_type'); ?></th>
-            <th>option</th>
+            <th></th>
 
 	</tr>
 	</thead>
@@ -82,7 +82,6 @@
 		<td><?php echo h($job['Job']['job_desc1']); ?>&nbsp;</td>
 		<td><?php echo h($job['Job']['template_type']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $job['Job']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $job['Job']['id'])); ?>
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $job['Job']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $job['Job']['id']))); ?>
 		</td>

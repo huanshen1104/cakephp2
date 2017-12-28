@@ -205,7 +205,7 @@ class Job extends AppModel {
 	);
 
 	public function beforeSave($options = array()) {
-		//$this->data['Job']['week_mask'] = implode(',', $this->data['Job']['week_mask']);
+		$this->data['Job']['row_modified'] = date('Y-m-d H:i:s');
 		return true;
 	}
 }

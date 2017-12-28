@@ -199,29 +199,31 @@ class UsersController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
 
-        //$this->Auth->allow('initDB'); // 用完之后就可以删除这一行
+        $this->Auth->allow('initDB'); // 用完之后就可以删除这一行
     }
 
     public function initDB() {
         $group = $this->User->Group;
 
-        // 允许 admins 访问一切
-        $group->id = 11;
-        $this->Acl->allow($group, 'controllers');
+        // 允许 admins(11) 访问一切
+        $this->Acl->allow([
+            'model' => 'Group',
+            'foreign_key' => 11
+        ], 'Users');
 
-        // 允许 managers 访问 posts 和 widgets
-        $group->id = 12;
-        $this->Acl->deny($group, 'controllers');
-        $this->Acl->allow($group, 'controllers/Posts');
-        $this->Acl->allow($group, 'controllers/Widgets');
-
-        // 只允许 users 添加和编辑 posts 和 widgets
-        $group->id = 13;
-        $this->Acl->deny($group, 'controllers');
-        $this->Acl->allow($group, 'controllers/Posts/add');
-        $this->Acl->allow($group, 'controllers/Posts/edit');
-        $this->Acl->allow($group, 'controllers/Widgets/add');
-        $this->Acl->allow($group, 'controllers/Widgets/edit');
+        //允许 managers 访问 posts 和 widgets
+        //$group->id = 12;
+        //$this->Acl->deny($group, 'controllers');
+        //$this->Acl->allow($group, 'controllers/Posts');
+        //$this->Acl->allow($group, 'controllers/Widgets');
+        //
+        //// 只允许 users 添加和编辑 posts 和 widgets
+        //$group->id = 13;
+        //$this->Acl->deny($group, 'controllers');
+        //$this->Acl->allow($group, 'controllers/Posts/add');
+        //$this->Acl->allow($group, 'controllers/Posts/edit');
+        //$this->Acl->allow($group, 'controllers/Widgets/add');
+        //$this->Acl->allow($group, 'controllers/Widgets/edit');
 
         // 加上 exit，避免糟糕的 "missing views" 错误消息
         echo "all done";

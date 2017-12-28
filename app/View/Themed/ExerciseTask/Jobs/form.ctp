@@ -51,19 +51,39 @@
             <td>
                 <?php echo $this->Form->checkbox('week_mask', [
                     'name'  => 'data[Job][week_mask][]',
-                    'value' => 'd1',
+                    'value' => '1',
                     'hiddenField' => false
-                ]); ?>Monday
+                ]); ?>Mon
                 <?php echo $this->Form->checkbox('week_mask', [
                     'name'  => 'data[Job][week_mask][]',
-                    'value' => 'd3',
+                    'value' => '1',
                     'hiddenField' => false
-                ]); ?>Tuesday
+                ]); ?>Tue
                 <?php echo $this->Form->checkbox('week_mask', [
                     'name'  => 'data[Job][week_mask][]',
-                    'value' => 'd3',
+                    'value' => '1',
                     'hiddenField' => false
-                ]); ?>Wednesday
+                ]); ?>Wed
+                <?php echo $this->Form->checkbox('week_mask', [
+                    'name'  => 'data[Job][week_mask][]',
+                    'value' => '1',
+                    'hiddenField' => false
+                ]); ?>Thu
+                <?php echo $this->Form->checkbox('week_mask', [
+                    'name'  => 'data[Job][week_mask][]',
+                    'value' => '1',
+                    'hiddenField' => false
+                ]); ?>Fri
+                <?php echo $this->Form->checkbox('week_mask', [
+                    'name'  => 'data[Job][week_mask][]',
+                    'value' => '1',
+                    'hiddenField' => false
+                ]); ?>Sat
+                <?php echo $this->Form->checkbox('week_mask', [
+                    'name'  => 'data[Job][week_mask][]',
+                    'value' => '1',
+                    'hiddenField' => false
+                ]); ?>Sun
             </td>
         </tr>
         <tr>

@@ -46,6 +46,14 @@ class JobsController extends AppController {
             ];
         }
 
+        if (isset($template_type) && $template_type) {
+            $conditions['Job.template_type'] = $template_type;
+        }
+
+        if (isset($is_enabled)) {
+            $conditions['Job.is_enabled'] = $is_enabled;
+        }
+
 		$this->set('jobs', $this->Paginator->paginate($conditions));
 	}
 
@@ -129,6 +137,6 @@ class JobsController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
 
-        $this->Auth->allow();
+        //$this->Auth->allow();
     }
 }
