@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('Tool', 'Lib');
 /**
  * Groups Controller
  *
@@ -14,6 +15,8 @@ class GroupsController extends AppController {
  * @var array
  */
 	public $components = array('Paginator');
+
+	public $uses = array('Group', 'Menu');
 
 /**
  * index method
@@ -115,6 +118,29 @@ class GroupsController extends AppController {
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
+
+    public function groupFunction($id = null) {
+	    if (!$id) {
+            throw new NotFoundException(__('Invalid data'));
+        }
+        $group = $this->Group->find('first', [
+            'recursive' => 0,
+            'conditions' => ['id' => $id],
+            'fields' => ['name']
+        ]);
+        $group = $group['Group'];
+        $menus = $this->Menu->find('all', [
+            'recursive' => 0,
+            'conditions' => ['Menu.row_status' => 1],
+            'fields' => ['Menu.menu_code', 'Menu.parent_id', 'Menu.menu_desc'],
+            'order'  => ['Menu.sort_num ASC']
+        ]);
+        $menus = array_column($menus, 'Menu');
+        $menus = Tool::getSubTree($menus);
+        //debug($menus);exit;
+        $this->set(compact('group', 'menus'));
+        $this->view = 'group_menus';
+    }
 
     public function beforeFilter() {
         parent::beforeFilter();

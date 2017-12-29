@@ -28,7 +28,7 @@
         <tr>
             <td class="actions" colspan="2" style="text-align: center">
                 <input type="submit" value="Save">
-                <a href="/groups/index">Cancel</a>
+                <a href="/users/index">Cancel</a>
             </td>
         </tr>
         </tbody>

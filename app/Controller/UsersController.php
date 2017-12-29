@@ -198,18 +198,28 @@ class UsersController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-
-        $this->Auth->allow('initDB'); // 用完之后就可以删除这一行
+        //$this->Auth->allow();
     }
 
     public function initDB() {
-        $group = $this->User->Group;
-
-        // 允许 admins(11) 访问一切
+        $this->Acl->allow([
+            'model' => 'Group',
+            'foreign_key' => 11
+        ], 'controllers');
         $this->Acl->allow([
             'model' => 'Group',
             'foreign_key' => 11
         ], 'Users');
+
+        $this->Acl->deny([
+            'model' => 'Group',
+            'foreign_key' => 11
+        ], 'Users/edit');
+
+        $this->Acl->allow([
+            'model' => 'Group',
+            'foreign_key' => 11
+        ], 'Groups');
 
         //允许 managers 访问 posts 和 widgets
         //$group->id = 12;

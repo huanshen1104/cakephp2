@@ -66,14 +66,22 @@ class AppController extends Controller {
 
         $this->Auth->allow(['logout']);
 
-        $res = $this->Acl->check([
+        if (isset($_SESSION['Auth']['User']['username']) && $_SESSION['Auth']['User']['username'])
+            $this->__checkAcl();
+    }
+
+    protected function __checkAcl($action = '') {
+        $groupId = $this->Auth->user('group_id');
+
+        empty($action) && ($action  = $this->request->controller . '/' .$this->request->action);
+
+        $isOk =  $this->Acl->check([
             'model' => 'Group',
-            'foreign_key' => $this->Auth->user('group_id')
-        ], 'Users');
-        debug($this->request->action);exit;
+            'foreign_key' => $groupId
+        ], $action);
+
+        if (!$isOk)
+            $this->Flash->error(__('不好意思，你没有权限哦'));
     }
 
-    protected function _checkAcl() {
-
-    }
 }
