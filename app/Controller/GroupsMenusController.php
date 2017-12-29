@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('Tool', 'Lib');
 /**
  * GroupsMenus Controller
  *
@@ -14,6 +15,8 @@ class GroupsMenusController extends AppController {
  * @var array
  */
 	public $components = array('Paginator');
+
+	public $uses = array('GroupsMenu', 'Group', 'Menu');
 
 /**
  * index method
@@ -67,7 +70,7 @@ class GroupsMenusController extends AppController {
  * @param string $id
  * @return void
  */
-	public function edit($id = null) {
+	public function oldEdit($id = null) {
 		if (!$this->GroupsMenu->exists($id)) {
 			throw new NotFoundException(__('Invalid groups menu'));
 		}
@@ -85,6 +88,32 @@ class GroupsMenusController extends AppController {
 		$groups = $this->GroupsMenu->Group->find('list');
 		$menus = $this->GroupsMenu->Menu->find('list');
 		$this->set(compact('groups', 'menus'));
+	}
+
+	public function edit($id = null) {
+		if (!$id) {
+			throw new NotFoundException(__('Invalid data'));
+		}
+		if ($this->request->is(array('post', 'put'))) {
+			debug($this->request->data);exit;
+			//if ($this->request->data['GroupsMenus'])
+		}
+		$group = $this->Group->find('first', [
+				'recursive' => 0,
+				'conditions' => ['id' => $id],
+				'fields' => ['name', 'id']
+		]);
+		$group = $group['Group'];
+		$menus = $this->Menu->find('all', [
+				'recursive' => 0,
+				'conditions' => ['Menu.row_status' => 1],
+				'fields' => ['Menu.id','Menu.menu_code', 'Menu.parent_id', 'Menu.menu_desc'],
+				'order'  => ['Menu.sort_num ASC']
+		]);
+		$menus = array_column($menus, 'Menu');
+		$menus = Tool::getSubTree($menus);
+		//debug($menus);exit;
+		$this->set(compact('group', 'menus'));
 	}
 
 /**

@@ -64,7 +64,7 @@ class AppController extends Controller {
             'action' => 'display'
         );
 
-        $this->Auth->allow(['logout']);
+        $this->Auth->allow();
 
         if (isset($_SESSION['Auth']['User']['username']) && $_SESSION['Auth']['User']['username'])
             $this->__checkAcl();

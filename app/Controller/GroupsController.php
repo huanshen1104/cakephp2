@@ -126,13 +126,13 @@ class GroupsController extends AppController {
         $group = $this->Group->find('first', [
             'recursive' => 0,
             'conditions' => ['id' => $id],
-            'fields' => ['name']
+            'fields' => ['name', 'id']
         ]);
         $group = $group['Group'];
         $menus = $this->Menu->find('all', [
             'recursive' => 0,
             'conditions' => ['Menu.row_status' => 1],
-            'fields' => ['Menu.menu_code', 'Menu.parent_id', 'Menu.menu_desc'],
+            'fields' => ['Menu.id','Menu.menu_code', 'Menu.parent_id', 'Menu.menu_desc'],
             'order'  => ['Menu.sort_num ASC']
         ]);
         $menus = array_column($menus, 'Menu');

@@ -2,6 +2,10 @@
     <h2><?php echo __('Function Authority for Role: ' . $group['name']); ?></h2>
     <div style="border:1px solid; padding:5px">
         <?php echo $this->Form->create('GroupsMenu'); ?>
+        <?php echo $this->Form->hidden('group_id', [
+            'name' => 'GroupsMenus[group_id]',
+            'value'=> $group['id']
+        ]);?>
         <table>
             <tbody>
             <?php foreach ((array)$menus as $subMenu): ?>
