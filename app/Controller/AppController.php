@@ -64,22 +64,24 @@ class AppController extends Controller {
             'action' => 'display'
         );
 
-        $this->Auth->allow();
+        //$this->Auth->allow();
 
         if (isset($_SESSION['Auth']['User']['username']) && $_SESSION['Auth']['User']['username'])
-            $this->__checkAcl();
+            $this->_checkAcl();
     }
 
-    protected function __checkAcl($action = '') {
+    protected function _checkAcl($action = '') {
         $groupId = $this->Auth->user('group_id');
 
         empty($action) && ($action  = $this->request->controller . '/' .$this->request->action);
 
+        //debug($groupId);
+        //debug($action);
         $isOk =  $this->Acl->check([
             'model' => 'Group',
             'foreign_key' => $groupId
         ], $action);
-
+        //debug($isOk);exit;
         if (!$isOk)
             $this->Flash->error(__('不好意思，你没有权限哦'));
     }

@@ -94,4 +94,21 @@ class Menu extends AppModel {
 		)
 	);
 
+	//public $actsAs = array('Acl' => array('type' => 'controlled'));
+
+	public function parentNode() {
+		if (!$this->id && empty($this->data)) {
+			return null;
+		}
+		if (isset($this->data['Menu']['sort_num'])) {
+			$parentId = $this->data['User']['sort_num'];
+		} else {
+			$parentId = $this->field('sort_num');
+		}
+		if (!$parentId) {
+			return null;
+		}
+		return array('Menu' => array('id' => $parentId));
+	}
+
 }

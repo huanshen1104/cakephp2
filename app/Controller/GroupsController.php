@@ -67,6 +67,19 @@ class GroupsController extends AppController {
 			$this->Group->create();
 			if ($this->Group->save($this->request->data)) {
 				$this->Flash->success(__('The group has been saved.'));
+				// 添加默认权限
+				$alowActions = [
+				    'Users/login',
+				    'Users/logout',
+					'Users/changePassword',
+				    'Pages/display',
+				];
+				foreach ($alowActions as $action) {
+					$this->Acl->allow([
+							'model' => 'Group',
+							'foreign_key' => $this->Group->id
+					], $action);
+				}
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Flash->error(__('The group could not be saved. Please, try again.'));

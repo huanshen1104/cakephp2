@@ -198,28 +198,24 @@ class UsersController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        //$this->Auth->allow();
+        $this->Auth->allow(['login', 'logout', 'initDB']);
     }
 
     public function initDB() {
-        $this->Acl->allow([
-            'model' => 'Group',
-            'foreign_key' => 11
-        ], 'controllers');
-        $this->Acl->allow([
-            'model' => 'Group',
-            'foreign_key' => 11
-        ], 'Users');
-
-        $this->Acl->deny([
-            'model' => 'Group',
-            'foreign_key' => 11
-        ], 'Users/edit');
-
-        $this->Acl->allow([
-            'model' => 'Group',
-            'foreign_key' => 11
-        ], 'Groups');
+		// 添加默认权限
+		$alowActions = [
+			//'controllers',
+			'Users/login',
+			'Users/logout',
+			'Users/changePassword',
+			'Pages/display',
+		];
+		foreach ($alowActions as $action) {
+			$this->Acl->allow([
+					'model' => 'Group',
+					'foreign_key' => 4
+			], $action);
+		}
 
         //允许 managers 访问 posts 和 widgets
         //$group->id = 12;

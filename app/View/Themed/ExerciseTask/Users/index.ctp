@@ -48,7 +48,7 @@
 		<td><?php echo h($user['User']['id']); ?>&nbsp;</td>
 		<td><?php echo h($user['User']['username']); ?>&nbsp;</td>
 		<td>
-			<?php echo $this->Html->link($user['Group']['name'], array('controller' => 'groups', 'action' => 'view', $user['Group']['id'])); ?>
+			<?php echo $user['Group']['name'];?>
 		</td>
 		<td><?php //echo h($user['User']['created']); ?>&nbsp;</td>
 		<td><?php //echo h($user['User']['modified']); ?>&nbsp;</td>

@@ -90,20 +90,71 @@ class GroupsMenusController extends AppController {
 		$this->set(compact('groups', 'menus'));
 	}
 
+	/**
+	 * 编辑用户组菜单权限
+	 *
+	 * @param int $id 用户组ID
+	 */
 	public function edit($id = null) {
 		if (!$id) {
 			throw new NotFoundException(__('Invalid data'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
-			debug($this->request->data);exit;
-			//if ($this->request->data['GroupsMenus'])
+			//debug($this->request->data);exit;
+			$groupId   = isset($this->request->data['GroupsMenus']['group_id']) ? $this->request->data['GroupsMenus']['group_id'] : 0;
+			$menuIds   = isset($this->request->data['GroupsMenus']['menu_id']) ? $this->request->data['GroupsMenus']['menu_id'] : [];
+			$menuCodes = isset($this->request->data['GroupsMenus']['menu_code']) ? $this->request->data['GroupsMenus']['menu_code'] : [];
+			if ($groupId && $menuIds) {
+				// 插入关联数据
+				$insertData   = [];
+				$tempArr      = [];
+				$useMenuCodes = [];
+				foreach ($menuIds as $menuId) {
+					$tempArr['group_id'] = $groupId;
+					$tempArr['menu_id']  = $menuId;
+					$insertData[]        = $tempArr;
+					$useMenuCodes[]      = $menuCodes[$menuId];
+				}
+				try {
+					// 开启事务
+					$dataSource = $this->GroupsMenu->getDataSource();
+					$dataSource->begin();
+					// 删除原有记录
+					$this->GroupsMenu->deleteAll([
+							'group_id' => $groupId
+					]);
+					if ($this->GroupsMenu->saveAll($insertData)) {
+						// 添加所选权限
+						foreach ($useMenuCodes as $menuCode) {
+							$this->Acl->allow([
+									'model' => 'Group',
+									'foreign_key' => $groupId
+							], $menuCode);
+						}
+					}
+					// 提交事务
+					$dataSource->commit();
+					$this->Flash->success(__("The Function Authority for Role #{$groupId} has been saved."));
+					return $this->redirect(array('controller' => 'groups', 'action' => 'index'));
+				} catch (Exception $e){
+					// 回滚
+					$dataSource->rollback();
+					$this->Flash->error(__("The Function Authority for Role #{$groupId} not be saved. Please, try again."));
+				}
+			}
 		}
+		// 当前用户组权限(菜单)信息
+		$groupMenuIds = $this->GroupsMenu->findAllByGroupId($id, ['menu_id']);
+		$groupMenuIds = array_column($groupMenuIds, 'GroupsMenu');
+		$groupMenuIds = array_column($groupMenuIds, 'menu_id');
+		// 用户组信息
 		$group = $this->Group->find('first', [
 				'recursive' => 0,
-				'conditions' => ['id' => $id],
-				'fields' => ['name', 'id']
+				'conditions' => ['Group.id' => $id],
+				'fields' => ['Group.name', 'Group.id']
 		]);
 		$group = $group['Group'];
+		// 所有菜单信息
 		$menus = $this->Menu->find('all', [
 				'recursive' => 0,
 				'conditions' => ['Menu.row_status' => 1],
@@ -112,8 +163,7 @@ class GroupsMenusController extends AppController {
 		]);
 		$menus = array_column($menus, 'Menu');
 		$menus = Tool::getSubTree($menus);
-		//debug($menus);exit;
-		$this->set(compact('group', 'menus'));
+		$this->set(compact('groupMenuIds', 'group', 'menus'));
 	}
 
 /**

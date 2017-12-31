@@ -16,10 +16,15 @@
 					<?php else: ?>
 						<td><?=$menu['menu_desc']?></td>
 						<td>
+							<?php echo $this->Form->hidden('', [
+								'name' => "GroupsMenus[menu_code][{$menu['id']}]",
+								'value'=> $menu['menu_code']
+							]);?>
 							<?php echo $this->Form->checkbox('menu_id', [
 								'name' => 'GroupsMenus[menu_id][]',
 								'value'=> $menu['id'],
-								'hiddenField' => false
+								'hiddenField' => false,
+								'checked'=> in_array($menu['id'], $groupMenuIds) ? true : false
 							])?>
 						</td>
 					<?php endif;?>
