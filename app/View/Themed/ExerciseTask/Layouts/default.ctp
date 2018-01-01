@@ -61,7 +61,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
             <div class="menu">
                 <ul>
                     <li><?php echo $this->Html->link(__('Home'), array('controller' => 'pages', 'action' => 'display')); ?></li>
-                    <?php $leftMenus = Tool::_getLeftMenus();//debug($menus);exit;?>
+                    <?php $leftMenus = Tool::_getLeftMenus();//debug($leftMenus);exit;?>
 					<?php foreach ($leftMenus as $leftMenu): ?>
 						<?php if ($leftMenu['lev'] == 0): ?>
 							<li><?php echo $this->Html->link(__($leftMenu['menu_desc']), ['controller' => $leftMenu['menu_code']]); ?> </li>

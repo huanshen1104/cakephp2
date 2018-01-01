@@ -11,6 +11,9 @@ App::uses('Menu', 'Model');
 
 class Tool
 {
+
+    public static $son = [];
+
     /**
      * 获取子孙树
      *
@@ -21,17 +24,16 @@ class Tool
      * @return array
      */
     public static function _getSubTree($data , $id = 0 , $lev = 0) {
-        static $son = [];
 
         foreach($data as $key => $value) {
             if($value['parent_id'] == $id) {
                 $value['lev'] = $lev;
-                $son[] = $value;
+                self::$son[] = $value;
                 self::_getSubTree($data , $value['id'] , $lev+1);
             }
         }
 
-        return $son;
+        return self::$son;
     }
 
     public static function _getAllMeus() {
@@ -42,6 +44,7 @@ class Tool
             'order'  => ['Menu.sort_num ASC']
         ]);
         $menus = array_column($menus, 'Menu');
+        self::$son = [];
         $menus = Tool::_getSubTree($menus);
 
         return $menus;
