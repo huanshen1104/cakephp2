@@ -20,6 +20,7 @@
  */
 
 App::uses('Controller', 'Controller');
+App::uses('Tool', 'Lib');
 
 /**
  * Application Controller

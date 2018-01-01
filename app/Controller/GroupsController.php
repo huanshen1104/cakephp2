@@ -149,7 +149,7 @@ class GroupsController extends AppController {
             'order'  => ['Menu.sort_num ASC']
         ]);
         $menus = array_column($menus, 'Menu');
-        $menus = Tool::getSubTree($menus);
+        $menus = Tool::_getSubTree($menus);
         //debug($menus);exit;
         $this->set(compact('group', 'menus'));
         $this->view = 'group_menus';

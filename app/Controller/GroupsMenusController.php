@@ -1,6 +1,5 @@
 <?php
 App::uses('AppController', 'Controller');
-App::uses('Tool', 'Lib');
 /**
  * GroupsMenus Controller
  *
@@ -113,6 +112,15 @@ class GroupsMenusController extends AppController {
 					$tempArr['group_id'] = $groupId;
 					$tempArr['menu_id']  = $menuId;
 					$insertData[]        = $tempArr;
+					// 父级菜单
+					$findData = $this->Menu->find('first', [
+							'recursive' => 0,
+							'conditions' => ['Menu.id' => $menuId],
+							'fields' => ['Menu.parent_id']
+					]);
+					$findData && $parentId = $findData['Menu']['parent_id'];
+					(isset($parentId) && $parentId) && $insertData[] = ['group_id' => $groupId, 'menu_id' => $parentId];
+					// 菜单code
 					$useMenuCodes[]      = $menuCodes[$menuId];
 				}
 				try {
@@ -124,12 +132,19 @@ class GroupsMenusController extends AppController {
 							'group_id' => $groupId
 					]);
 					if ($this->GroupsMenu->saveAll($insertData)) {
+						// 禁用所有权限
+						foreach ($menuCodes as $menuCodeA) {
+							$this->Acl->deny([
+									'model' => 'Group',
+									'foreign_key' => $groupId
+							], $menuCodeA);
+						}
 						// 添加所选权限
-						foreach ($useMenuCodes as $menuCode) {
+						foreach ($useMenuCodes as $menuCodeB) {
 							$this->Acl->allow([
 									'model' => 'Group',
 									'foreign_key' => $groupId
-							], $menuCode);
+							], $menuCodeB);
 						}
 					}
 					// 提交事务
@@ -155,14 +170,7 @@ class GroupsMenusController extends AppController {
 		]);
 		$group = $group['Group'];
 		// 所有菜单信息
-		$menus = $this->Menu->find('all', [
-				'recursive' => 0,
-				'conditions' => ['Menu.row_status' => 1],
-				'fields' => ['Menu.id','Menu.menu_code', 'Menu.parent_id', 'Menu.menu_desc'],
-				'order'  => ['Menu.sort_num ASC']
-		]);
-		$menus = array_column($menus, 'Menu');
-		$menus = Tool::getSubTree($menus);
+		$menus = Tool::_getAllMeus();
 		$this->set(compact('groupMenuIds', 'group', 'menus'));
 	}
 

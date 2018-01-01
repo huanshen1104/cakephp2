@@ -61,14 +61,18 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
             <div class="menu">
                 <ul>
                     <li><?php echo $this->Html->link(__('Home'), array('controller' => 'pages', 'action' => 'display')); ?></li>
-                    <li><?php echo $this->Html->link(__('Job Management'), array('controller' => 'jobs', 'action' => 'index')); ?> </li>
-                    <li><?php echo $this->Html->link(__('User Management'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-                    <li>
+                    <?php $leftMenus = Tool::_getLeftMenus();//debug($menus);exit;?>
+					<?php foreach ($leftMenus as $leftMenu): ?>
+						<?php if ($leftMenu['lev'] == 0): ?>
+							<li><?php echo $this->Html->link(__($leftMenu['menu_desc']), ['controller' => $leftMenu['menu_code']]); ?> </li>
+						<?php endif;?>
+					<?php endforeach;?>
+					<!--<li>
                         <ul>
-                            <li><?php echo $this->Html->link(__('User'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-                            <li><?php echo $this->Html->link(__('Role'), array('controller' => 'groups', 'action' => 'index')); ?> </li>
+                            <li><?php /*echo $this->Html->link(__('User'), array('controller' => 'users', 'action' => 'index')); */?> </li>
+                            <li><?php /*echo $this->Html->link(__('Role'), array('controller' => 'groups', 'action' => 'index')); */?> </li>
                         </ul>
-                    </li>
+                    </li>-->
                 </ul>
             </div>
 
