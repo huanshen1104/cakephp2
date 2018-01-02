@@ -79,6 +79,15 @@ class JobsController extends AppController {
  */
 	public function add() {
 		if ($this->request->is('post')) {
+		    $data = $this->request->data['Job'];
+		    // 检查job_code唯一性
+		    if (isset($data['job_code']) && $data['job_code']) {
+		        $rowData = $this->Job->findByJobCode($data['job_code']);
+		        if ($rowData) {
+                    $this->Flash->error(__('The job code is in use. Please, try again.'));
+                    $this->redirect($this->request->here);
+                }
+            }
 			$this->Job->create();
 			if ($this->Job->save($this->request->data)) {
 				$this->Flash->success(__('The job has been saved.'));

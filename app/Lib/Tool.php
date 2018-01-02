@@ -36,6 +36,11 @@ class Tool
         return self::$son;
     }
 
+    /**
+     * 获取所有菜单信息（已做无限极分类排序）
+     *
+     * @return array|null
+     */
     public static function _getAllMeus() {
         $menus = (new Menu())->find('all', [
             'recursive' => 0,

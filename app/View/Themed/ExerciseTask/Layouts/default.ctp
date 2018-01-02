@@ -43,7 +43,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
             <div class="topMenu">
             <p>
                 <?php echo $this->Html->link('[ Language ]', array('controller' => 'users', 'action' => '#'));?>
-                <?php if (isset($_SESSION['Auth']['User']['username']) && $_SESSION['Auth']['User']['username']): ?>
+                <?php if ($this->Session->check('Auth.User')): ?>
                     <?php echo $this->Html->link('[ Change Password ]', array('controller' => 'users', 'action' => 'changePassword', $_SESSION['Auth']['User']['id']));?>
                     <?php echo $this->Html->link('[ Logout ]', array('controller' => 'users', 'action' => 'logout'));?>
                 <?php endif;?>
