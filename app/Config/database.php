@@ -82,7 +82,7 @@ class DATABASE_CONFIG {
         'persistent' => false,
         'host' => '127.0.0.1',
         'login' => 'homestead',
-        'password' => 'secret',
+        'password' => '123456',
         'database' => 'cakephp',
         'prefix' => '',
         //'encoding' => 'utf8',

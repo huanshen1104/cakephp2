@@ -52,7 +52,7 @@
 		<td><?php echo h($group['Group']['name']); ?>&nbsp;</td>
 		<td><?php echo h($group['Group']['group_desc']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('Function Authority'), array('controller' => 'groupsmenus', 'action' => 'edit', $group['Group']['id'])); ?>
+			<?php echo $this->Html->link(__('Function Authority'), array('controller' => 'groupsMenus', 'action' => 'edit', $group['Group']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $group['Group']['id'])); ?>
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $group['Group']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $group['Group']['id']))); ?>
 		</td>
