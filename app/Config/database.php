@@ -77,6 +77,17 @@ class DATABASE_CONFIG {
 		//'encoding' => 'utf8',
 	);
 
+    public $homestead = array(
+        'datasource' => 'Database/Mysql',
+        'persistent' => false,
+        'host' => '127.0.0.1',
+        'login' => 'homestead',
+        'password' => 'secret',
+        'database' => 'cakephp',
+        'prefix' => '',
+        //'encoding' => 'utf8',
+    );
+
 	public $test = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,

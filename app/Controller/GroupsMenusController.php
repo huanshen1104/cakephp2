@@ -93,6 +93,8 @@ class GroupsMenusController extends AppController {
 	 * 编辑用户组菜单权限
 	 *
 	 * @param int $id 用户组ID
+     *
+     * @return void
 	 */
 	public function edit($id = null) {
 		if (!$id) {

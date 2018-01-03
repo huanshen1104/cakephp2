@@ -45,7 +45,7 @@ class AppController extends Controller {
         ),
         'Flash',
         'Session',
-        'Security',
+        //'Security',
         'DebugKit.Toolbar'
     );
 

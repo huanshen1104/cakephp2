@@ -59,18 +59,21 @@ class Tool
      * 获取当前用户菜单权限
      */
     public static function _getLeftMenus(){
-        $groupId = $_SESSION['Auth']['User']['group_id'];
-        // 当前用户组权限(菜单)信息
-        $groupMenuIds = (new GroupsMenu())->findAllByGroupId($groupId, ['menu_id']);
-        $groupMenuIds = array_column($groupMenuIds, 'GroupsMenu');
-        $groupMenuIds = array_column($groupMenuIds, 'menu_id');
-        // 所有菜单信息
-        $menus = self::_getAllMeus();
-        foreach ((array)$menus as $key=>$menu) {
-            if (in_array($menu['id'], $groupMenuIds)) {
-                continue;
-            } else {
-                unset($menus[$key]);
+        $menus = [];
+        if (SessionComponent::check('Auth.User')) {
+            $groupId = SessionComponent::read('Auth.User.group_id');
+            // 当前用户组权限(菜单)信息
+            $groupMenuIds = (new GroupsMenu())->findAllByGroupId($groupId, ['menu_id']);
+            $groupMenuIds = array_column($groupMenuIds, 'GroupsMenu');
+            $groupMenuIds = array_column($groupMenuIds, 'menu_id');
+            // 所有菜单信息
+            $menus = self::_getAllMeus();
+            foreach ((array)$menus as $key=>$menu) {
+                if (in_array($menu['id'], $groupMenuIds)) {
+                    continue;
+                } else {
+                    unset($menus[$key]);
+                }
             }
         }
 
